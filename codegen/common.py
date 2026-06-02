@@ -439,6 +439,20 @@ def init_backend_registration() -> None:
             CppWrapperGpu,
         )
 
+    if get_scheduling_for_device("npu") is None:
+        from .tilelang import TileLangScheduling
+
+        npu_backends = {
+            "tilelang": TileLangScheduling,
+            "triton": TritonScheduling,
+        }
+        npu_backend = getattr(config, "npu_backend", "triton")
+        register_backend_for_device(
+            "npu",
+            lambda scheduling: npu_backends[npu_backend](scheduling),
+            PythonWrapperCodegen,
+        )
+
     private_backend = torch._C._get_privateuse1_backend_name()
     if (
         private_backend != "privateuseone"

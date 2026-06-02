@@ -1400,6 +1400,9 @@ cpu_backend: Literal["cpp", "triton", "halide"] = "cpp"
 # Backend to use for CUDA codegen either "triton" or "halide" (experimental)
 cuda_backend: Literal["triton", "halide"] = "triton"
 
+# Backend to use for NPU (Ascend) codegen: "tilelang" or "triton" (via triton-npu)
+npu_backend: Literal["tilelang", "triton"] = "tilelang"
+
 
 class halide:
     # Base halide target to use for CPU devices
